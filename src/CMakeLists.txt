@@ -1,6 +1,7 @@
 set(SOURCES
     Service.cpp
     Runlevel.cpp
+    System.cpp
     monrc.cpp
 )
 

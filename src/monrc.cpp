@@ -9,8 +9,11 @@
 #include <Service.h>
 #include <Runlevel.h>
 #include <thread>
+#include <System.h>
 
 int main(int argc, const char * argv[]) {
+	System::daemonize("/var/run/monrc.pid", "/var/log/monrc.log");
+
 	Runlevel & r = runlevel("default");
 	for (auto & s : r.services()) {
 		std::cout << " * " << s.name() << std::endl;
