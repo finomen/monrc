@@ -12,6 +12,8 @@
 
 namespace System {
 
+bool term();
+void logTermination();
 void daemonize(std::string const & pidFile, std::string const & logFile = "/dev/null");
 
 }

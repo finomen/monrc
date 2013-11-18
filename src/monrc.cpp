@@ -19,8 +19,11 @@ int main(int argc, const char * argv[]) {
 		std::cout << " * " << s.name() << std::endl;
 	}
 
-	for (;;) {
+	while (!System::term()) {
 		for (Service & s : r.services()) {
+            if (System::term()) {
+                break;
+            }
 			if (s.status() == Service::CRASHED || s.status() == Service::STOPPED) {
 				std::cout << " - Restarting " << s.name() << std::endl;
 				if (!s.start())	{
@@ -29,8 +32,11 @@ int main(int argc, const char * argv[]) {
 			}
 		}
 
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+        if (!System::term()) {
+    		std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
 	}
+    System::logTermination();
 	return 0;
 }
 

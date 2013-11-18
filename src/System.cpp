@@ -7,6 +7,8 @@
 
 #include <System.h>
 #include <iostream>
+#include <signal.h>
+#include <string.h>
 #include <unistd.h>
 #include <syslog.h>
 #include <sys/types.h>
@@ -15,6 +17,27 @@
 #include <fstream>
 
 namespace System {
+
+namespace {
+    bool _term;
+}
+
+bool term() {
+    return _term;
+}
+
+void sigHandler(int signo) {
+    if (signo == SIGTERM && !_term) {
+        std::cout << "Got SIGTERM, terminating" << std::endl;
+        _term = true;
+        kill(0, SIGTERM);  // send SIGTERM to the whole process group
+    }
+}
+
+void logTermination() {
+    std::cout << "MonRC stopped" << std::endl;
+	syslog(LOG_INFO | LOG_USER, "MonRC stopped");
+}
 
 void daemonize(std::string const & pidFile, std::string const & logFile) {
 	if (pid_t pid = fork()) {
@@ -68,7 +91,22 @@ void daemonize(std::string const & pidFile, std::string const & logFile) {
 		exit(1);
 	}
 
+    _term = false;
+
+    struct sigaction termAction;
+    memset(&termAction, 0, sizeof(termAction));
+    termAction.sa_handler = sigHandler;
+    sigset_t blockSigSet;
+    sigemptyset(&blockSigSet);
+    sigaddset(&blockSigSet, SIGTERM);
+    sigaddset(&blockSigSet, SIGINT);
+    termAction.sa_mask = blockSigSet;
+    if (sigaction(SIGTERM, &termAction, 0) == -1) {
+        std::cout << "SIGTERM can not be handled" << std::endl;
+    }
+
 	syslog(LOG_INFO | LOG_USER, "MonRC started");
+    std::cout << "MonRC started" << std::endl;
 }
 
 }
