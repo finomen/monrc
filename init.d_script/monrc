@@ -1,0 +1,16 @@
+#!/sbin/runscript
+
+BINARY=/usr/local/sbin/monrc
+PIDFILE=/var/run/monrc.pid
+
+start() {
+  ebegin "Starting MonRC"
+  start-stop-daemon --start --pidfile "${PIDFILE}" --exec "${BINARY}"
+  eend $?
+}
+
+stop() {
+  ebegin "Stopping MonRC"
+  start-stop-daemon --stop --pidfile "${PIDFILE}" --exec "${BINARY}"
+  eend $?
+}

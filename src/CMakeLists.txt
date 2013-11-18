@@ -6,4 +6,6 @@ set(SOURCES
 )
 
 add_executable(monrc ${SOURCES})
-target_link_libraries(monrc rc)    
+target_link_libraries(monrc rc)
+
+install(TARGETS monrc DESTINATION sbin)
