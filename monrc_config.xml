@@ -1,0 +1,16 @@
+<monrc>
+    <monitored>
+        <services>
+            <service>numlock</service>
+        </services>
+        <runlevels>
+            <runlevel>default</runlevel>
+        </runlevels>
+    </monitored>
+    <excluded>
+        <services>
+            <service>sshd</service>
+            <service>netmount</service>
+        </services>
+    </excluded>
+</monrc>

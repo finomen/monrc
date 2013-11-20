@@ -2,6 +2,7 @@ set(SOURCES
     Service.cpp
     Runlevel.cpp
     System.cpp
+    MonitoredServices.cpp
     monrc.cpp
 )
 

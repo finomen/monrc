@@ -11,6 +11,7 @@
 #include <string>
 
 class Runlevel;
+class MonitoredServices;
 
 class Service {
 public:
@@ -42,6 +43,7 @@ private:
 	Service(std::string const & name);
 	Service(const Service &) = delete;
 	friend class Runlevel;
+    friend class MonitoredServices;
 private:
 	std::string name_;
 	std::string lastOut;

@@ -23,6 +23,7 @@ void Runlevel::reload() {
 	RC_STRINGLIST * services = rc_services_in_runlevel(name_.c_str());
 	RC_STRING * service = services->tqh_first;
 
+    services_.clear();
 	while (service) {
 		services_.emplace_back(std::move(Service(service->value)));
 		service = service->entries.tqe_next;
