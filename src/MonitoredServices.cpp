@@ -20,6 +20,7 @@ void MonitoredServices::reload() {
     read_xml(configFileName_, pt);
 
     std::set<std::string> monitoredServices;
+    std::set<std::string> disableLoggingFor;
 
     BOOST_FOREACH(ptree::value_type& v, pt.get_child("monrc.monitored.services")) {
         monitoredServices.insert(v.second.data());
@@ -34,9 +35,13 @@ void MonitoredServices::reload() {
         monitoredServices.erase(v.second.data());
     }
 
+    BOOST_FOREACH(ptree::value_type& v, pt.get_child("monrc.disableLoggingFor.services")) {
+        disableLoggingFor.insert(v.second.data());
+    }
+
     mServices_.clear();
     for (std::set<std::string>::const_iterator ms = monitoredServices.begin(); ms != monitoredServices.end(); ++ms) {
-        mServices_.emplace_back(std::move(Service(*ms)));
+        mServices_.emplace_back(std::move(Service(*ms, disableLoggingFor.find(*ms) == disableLoggingFor.end())));
     }
 }
 

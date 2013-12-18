@@ -168,7 +168,10 @@ std::string const & Service::getLastStderr() const {
 	return lastErr;
 }
 
-Service::Service(std::string const & name) :
-		name_(name) {
+Service::Service(std::string const & name, bool loggingEnabled_) :
+		name_(name), loggingEnabled_(loggingEnabled_) {
 }
 
+bool Service::loggingEnabled() const {
+    return loggingEnabled_;
+}

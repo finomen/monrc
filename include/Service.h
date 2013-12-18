@@ -38,9 +38,10 @@ public:
 	Service(Service &&) = default;
 	std::string const & getLastStdout() const;
 	std::string const & getLastStderr() const;
+    bool loggingEnabled() const;
 private:
 	bool exec(std::string const & command);
-	Service(std::string const & name);
+	Service(std::string const & name, bool loggingEnabled_ = true);
 	Service(const Service &) = delete;
 	friend class Runlevel;
     friend class MonitoredServices;
@@ -48,6 +49,7 @@ private:
 	std::string name_;
 	std::string lastOut;
 	std::string lastErr;
+    bool loggingEnabled_;
 };
 
 #endif // SERVICE_H_

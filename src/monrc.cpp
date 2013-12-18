@@ -28,11 +28,17 @@ int main(int argc, const char * argv[]) {
                 break;
             }
 			if (s.status() == Service::CRASHED || s.status() == Service::STOPPED) {
-                std::cout << " - Restarting " << s.name() << std::endl;
+                if (s.loggingEnabled()) {
+                    std::cout << " - Restarting " << s.name() << std::endl;
+                }
                 if (s.start()) {
-                    std::cout << " - Done" << std::endl;
+                    if (s.loggingEnabled()) {
+                        std::cout << " - Done" << std::endl;
+                    }
                 } else {
-                    std::cerr << " - Failed!" << std::endl;
+                    if (s.loggingEnabled()) {
+                        std::cerr << " - Failed!" << std::endl;
+                    }
                 }
 			}
 		}
