@@ -17,6 +17,7 @@
     <disableLoggingFor>
         <services>
             <service>net.eth1</service>
+            <service>netmount</service>
         </services>
     </disableLoggingFor>
 </monrc>
