@@ -3,6 +3,11 @@
 BINARY=/usr/local/sbin/monrc
 PIDFILE=/var/run/monrc.pid
 
+depend() {
+  before local
+  after *
+}
+
 start() {
   ebegin "Starting MonRC"
   start-stop-daemon --start --pidfile "${PIDFILE}" --exec "${BINARY}"
