@@ -7,4 +7,4 @@ include_directories(include)
 
 add_subdirectory(src)
 
-install(FILES monrc_config.xml DESTINATION etc)
+install(FILES monrc_config.xml monrc_config.xml.example DESTINATION etc)

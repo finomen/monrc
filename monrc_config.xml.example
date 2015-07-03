@@ -1,6 +1,7 @@
 <monrc>
     <monitored>
         <services>
+            <service>numlock</service>
         </services>
         <runlevels>
             <runlevel>default</runlevel>
@@ -8,12 +9,15 @@
     </monitored>
     <excluded>
         <services>
-	    <service>local</service>
+            <service>sshd</service>
+            <service>netmount</service>
         </services>
     </excluded>
 
     <disableLoggingFor>
-    	<services>
-	</services>
+        <services>
+            <service>net.eth1</service>
+            <service>netmount</service>
+        </services>
     </disableLoggingFor>
 </monrc>
